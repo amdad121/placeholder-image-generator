@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="Simple Placeholder Image Generator" />
+        <meta name="keywords" content="Image, Generator, Image Generator, Placeholder, Placeholder Image Generator" />
+        <meta name="author" content="Amdadul Haq" />
+
+        <title>Placeholder Image Generator</title>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="select-none bg-gray-200 text-white antialiased">
+        <div class="mx-auto mt-20 max-w-2xl rounded-lg bg-white text-gray-800 shadow-lg">
+            <h1 class="border-b py-2 text-center text-2xl font-semibold">Placeholder Image Generator</h1>
+            <div class="space-y-4 p-4">
+                <div class="grid grid-cols-4 items-center gap-2">
+                    <div>
+                        <label for="width">Width:</label>
+                        <input class="w-16 rounded border p-1" id="width" type="number" value="600" />
+                    </div>
+                    <div>
+                        <label for="height">Height:</label>
+                        <input class="w-16 rounded border p-1" id="height" type="number" value="200" />
+                    </div>
+                    <div>
+                        <label for="color">BG Color:</label>
+                        <input class="w-16 rounded border" id="color" type="color" value="#eeeeee" />
+                    </div>
+                    <div>
+                        <label for="textColor">Text Color:</label>
+                        <input class="w-16 rounded border" id="textColor" type="color" value="#31343c" />
+                    </div>
+                </div>
+                <canvas class="me-auto ms-auto" id="canvas"></canvas>
+                <div class="flex items-center justify-between">
+                    <div class="text-center">
+                        <button
+                            class="transition-color rounded border p-1 hover:bg-gray-200"
+                            title="Decrease Font Size"
+                            onclick="decreaseFontSize()"
+                        >
+                            <svg
+                                class="size-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                            >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14"></path>
+                            </svg>
+                        </button>
+
+                        <button
+                            class="transition-color rounded border p-1 hover:bg-gray-200"
+                            title="Reset Font Size"
+                            onclick="resetFontSize()"
+                        >
+                            <svg
+                                class="size-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+                                ></path>
+                            </svg>
+                        </button>
+                        <button
+                            class="transition-color rounded border p-1 hover:bg-gray-200"
+                            title="Increase Font Size"
+                            onclick="increaseFontSize()"
+                        >
+                            <svg
+                                class="size-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                            >
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"></path>
+                            </svg>
+                        </button>
+                        <button
+                            class="transition-color rounded border p-1 hover:bg-gray-200"
+                            title="Hide Text"
+                            onclick="toggleText()"
+                        >
+                            <svg
+                                class="size-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88"
+                                ></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <button
+                        class="transition-color rounded border p-1 hover:bg-gray-200"
+                        title="Download Image"
+                        onclick="downloadImage()"
+                    >
+                        <svg
+                            class="size-5"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <p class="mt-2 text-center text-sm font-semibold text-gray-700">
+            Made with
+            <svg
+                class="inline size-4 text-red-500"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="red"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
+                ></path>
+            </svg>
+            by
+            <a class="hover:underline" href="https://amdadulhaq.com" target="_blank" rel="noopener noreferrer"
+                >Amdadul Haq</a
+            >
+        </p>
+
+        <script>
+            let fontSize = 40;
+            const defaultFontSize = 40;
+            let textVisible = true;
+
+            function generateImage() {
+                const width = document.getElementById('width').value;
+                const height = document.getElementById('height').value;
+                const color = document.getElementById('color').value;
+                const textColor = document.getElementById('textColor').value;
+                const canvas = document.getElementById('canvas');
+                const ctx = canvas.getContext('2d');
+
+                canvas.width = width;
+                canvas.height = height;
+                ctx.fillStyle = color;
+                ctx.fillRect(0, 0, width, height);
+
+                if (textVisible) {
+                    ctx.fillStyle = textColor;
+                    ctx.font = fontSize + 'px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    const textX = canvas.width / 2;
+                    const textY = canvas.height / 2;
+                    ctx.fillText(`${width} x ${height}`, textX, textY);
+                }
+            }
+
+            function downloadImage() {
+                const canvas = document.getElementById('canvas');
+                const link = document.createElement('a');
+                const width = document.getElementById('width').value;
+                const height = document.getElementById('height').value;
+                const imageName = prompt('Enter image name:', `placeholder${width}x${height}`);
+
+                if (imageName) {
+                    link.download = imageName + '.jpg';
+                    link.href = canvas.toDataURL('image/jpeg', 1.0);
+                    link.click();
+                }
+            }
+
+            function increaseFontSize() {
+                fontSize += 2;
+                generateImage();
+            }
+
+            function decreaseFontSize() {
+                if (fontSize > 2) {
+                    fontSize -= 2;
+                    generateImage();
+                }
+            }
+
+            function resetFontSize() {
+                fontSize = defaultFontSize;
+                generateImage();
+            }
+
+            function toggleText() {
+                textVisible = !textVisible;
+                generateImage();
+            }
+
+            // Add event listeners to inputs
+            document.getElementById('width').addEventListener('input', generateImage);
+            document.getElementById('height').addEventListener('input', generateImage);
+            document.getElementById('color').addEventListener('input', generateImage);
+            document.getElementById('textColor').addEventListener('input', generateImage);
+
+            // Initial image generation
+            generateImage();
+        </script>
+    </body>
+</html>
