@@ -110,6 +110,14 @@
                             </svg>
                         </button>
                     </div>
+
+                    <div class="inline-block">
+                        <label for="format">Format:</label>
+                        <select class="w-16 rounded border p-1" id="format">
+                            <option value="image/jpeg">JPG</option>
+                            <option value="image/png">PNG</option>
+                        </select>
+                    </div>
                     <button
                         class="transition-color rounded border p-1 hover:bg-gray-200"
                         title="Download Image"
@@ -189,11 +197,12 @@
                 const link = document.createElement('a');
                 const width = document.getElementById('width').value;
                 const height = document.getElementById('height').value;
+                const format = document.getElementById('format').value;
                 const imageName = prompt('Enter image name:', `placeholder${width}x${height}`);
 
                 if (imageName) {
-                    link.download = imageName + '.jpg';
-                    link.href = canvas.toDataURL('image/jpeg', 1.0);
+                    link.download = imageName + (format === 'image/png' ? '.png' : '.jpg');
+                    link.href = canvas.toDataURL(format, 1.0);
                     link.click();
                 }
             }
@@ -225,6 +234,7 @@
             document.getElementById('height').addEventListener('input', generateImage);
             document.getElementById('color').addEventListener('input', generateImage);
             document.getElementById('textColor').addEventListener('input', generateImage);
+            document.getElementById('format').addEventListener('change', generateImage);
 
             // Initial image generation
             generateImage();
